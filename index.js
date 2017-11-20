@@ -1,53 +1,51 @@
-/*$('#email').focusout(function(){
-	if (validateEmail()){
-		$("#email").css('backgroundColor') = 'green';
-		enableSubmit();
-	}
-	else {
-		window.alert("E-mail уже использован! Перейдите на страницу авторизации.");
-	}
-});*/
-
-$('#email').focus(function(){
-	alert('ZHOPA');
-	$(this).css('border-color', 'green');
-	enableSubmit();
-});
-
-/*$('#login').focusout(function(){
-	if (validateEmail()){
-		$("#login").css('background-color') = 'green';
-		enableSubmit();
-	}
-	else {
-		window.alert("Такое имя уже существует!");
-	}
-});
-
-function validateEmail() {
-	var emailToCheck = $('#email').val();
-	var OK = false;
-	$.post('checkingEmail.hs', emailToCheck, statusCode: {
-		200: function() {
-			OK = true;
+$('.emailField').focusout(function(){
+	validateEmail(function(err)
+	{
+		if(err)
+		{
+			$(this).css("box-shadow", "0 0 4px 0 #f00");
+			window.alert("E-mail занят!");
 		}
-	});
-	return OK;
+		else
+		{
+			$(this).css("box-shadow", "0 0 4px 0 #0f0");
+			//Тут делаем доступной кнопку Submit
+		}
+	})
+});
+ 
+function validateEmail(callback) {
+    var emailToCheck = $('#emailField').val();
+	$.get('checkingEmail.hs', {email: emailToCheck})
+		.success(function() { callback(false) })
+		.error(function() { callback(true) })
 }
 
-function validateLogin() {
-	var emailToCheck = $('#email').val();
-	var OK = false;
-	$.post('checkingEmail.hs', emailToCheck, statusCode: {
-		200: function() {
-			OK = true;
+$('.lognField').focusout(function(){
+	validateLogin(function(err)
+	{
+		if(err)
+		{
+			$(this).css("box-shadow", "0 0 4px 0 #f00");
+			window.alert("Выберите другое имя!");
 		}
-	});
-	return OK;
+		else
+		{
+			$(this).css("box-shadow", "0 0 4px 0 #0f0");
+			//Тут делаем доступной кнопку Submit
+		}
+	})
+});
+ 
+function validateLogin(callback) {
+    var loginToCheck = $('#loginField').val();
+	$.get('checkingLogin.hs', {login: loginToCheck})
+		.success(function() { callback(false) })
+		.error(function() { callback(true) })
 }
 
 function enableSubmit() {
-	if ($("#email").css('backgroundColor') == 'green' && $("#login").css('backgroundColor') == 'green'){
-		$('#sub').disabled = false;
+	if ($('.emailField').css("box-shadow") == "0 0 4px 0 #0f0" && $('.loginField').css("box-shadow") == "0 0 4px 0 #0f0") {
+		$(".submitBtn").prop( "disabled", false );
 	}
-}*/
+}
