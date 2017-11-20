@@ -9,7 +9,7 @@ $('.emailField').focusout(function(){
 		else
 		{
 			$(this).css("box-shadow", "0 0 4px 0 #0f0");
-			//Тут делаем доступной кнопку Submit
+			enableSubmit();
 		}
 	})
 });
@@ -32,7 +32,7 @@ $('.lognField').focusout(function(){
 		else
 		{
 			$(this).css("box-shadow", "0 0 4px 0 #0f0");
-			//Тут делаем доступной кнопку Submit
+			enableSubmit();
 		}
 	})
 });
